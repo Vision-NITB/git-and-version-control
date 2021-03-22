@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Git & Version Control</title>
+    <meta name="author" content="(Seshal Jain)">
+    <style type="text/css">
+    .underline { text-decoration: underline; }
+    </style>
+    <link rel="stylesheet" href=
+    "https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href=
+    "https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/night.css"
+    id="theme">
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+
+    <script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+    </script>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <section id="slide-org189aa0b">
+                    <h2 id="org189aa0b">Version Control</h2>
+                    <p>the practice of tracking and managing
+                    changes to software code</p>
+                </section>
+                <section id="slide-orgd3462f6">
+                    <h3 id="orgd3462f6">Why use VC?</h3>
+                    <ul>
+                        <li>undo changes</li>
+                        <li>simplify collaboration</li>
+                        <li>look at previous versions</li>
+                    </ul>
+                </section>
+                <section id="slide-org0f3c1f2">
+                    <h3 id="org0f3c1f2">Bad version control</h3>
+                    <p>filename-based<br>
+                    <img src="./img/bad-vc.png" alt=
+                    "bad-vc.png"></p>
+                </section>
+                <section id="slide-org0f3c1f2-split">
+                    <h3>Bad version control</h3>
+                    <p>unnecessary comments in code<br></p>
+                    <div class="org-src-container">
+                        <pre class="src src-cpp"><code trim=
+                        ""><span style=
+                        "color: #ff79c6;">for</span> <span style=
+                        "color: #61bfff;">(</span><span style=
+                        "color: #bd93f9;">int</span> i = <span style=
+                        "color: #bd93f9; font-weight: bold;">1</span>; i &lt; Ntr; i++<span style="color: #61bfff;">)</span> <span style="color: #61bfff;">{</span>
+  <span style="color: #ff79c6;">if</span> <span style=
+"color: #ff79c6;">(</span>radius &gt; turn_rad<span style=
+"color: #50fa7b;">[</span>i - <span style=
+"color: #bd93f9; font-weight: bold;">1</span><span style=
+"color: #50fa7b;">]</span> &amp;& radius &lt;= turn_rad<span style=
+"color: #50fa7b;">[</span>i<span style=
+"color: #50fa7b;">]</span><span style=
+"color: #ff79c6;">)</span> <span style="color: #ff79c6;">{</span>
+    <span style="color: #6272a4;">// </span><span style=
+"color: #6272a4;">for(int j = 1; j &lt; Nh; j++) {</span>
+    <span style="color: #6272a4;">//     </span><span style=
+"color: #6272a4;">if (theta &lt; heading[j-1]) {</span>
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">// cout &lt;&lt; "I" &lt;&lt; i &lt;&lt; endl;</span>
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">// cout &lt;&lt; "J" &lt;&lt; j &lt;&lt; endl;</span>
+
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">q11 = torque_in[i-1][j-1];</span>
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">q12 = torque_in[i][j-1];</span>
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">q21 = torque_in[i-1][j];</span>
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">q22 = torque_in[i][j];</span>
+
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">// torque_out = sqrt(q22 - q12) * q22/q11;</span>
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">torque_out = abs(sqrt(q22 - q12) * q22/q11);</span>
+
+    <span style="color: #6272a4;">//         </span><span style=
+"color: #6272a4;">cout &lt;&lt; "T_Out:" &lt;&lt; t_out &lt;&lt; endl;</span>
+    <span style="color: #6272a4;">//     </span><span style=
+"color: #6272a4;">}</span>
+    <span style="color: #6272a4;">// </span><span style=
+"color: #6272a4;">}</span>
+    q11 = torque_in<span style=
+"color: #50fa7b;">[</span>i - <span style=
+"color: #bd93f9; font-weight: bold;">1</span><span style=
+"color: #50fa7b;">][</span><span style=
+"color: #bd93f9; font-weight: bold;">0</span><span style=
+"color: #50fa7b;">]</span>;
+    q22 = torque_in<span style=
+"color: #50fa7b;">[</span>i<span style=
+"color: #50fa7b;">][</span><span style=
+"color: #bd93f9; font-weight: bold;">0</span><span style=
+"color: #50fa7b;">]</span>;
+    torque_out = q22 / q11;
+  <span style="color: #ff79c6;">}</span>
+<span style="color: #61bfff;">}</span>
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section id="slide-org1b48a1b">
+                    <h2 id="org1b48a1b">what is
+                    <code>git</code>?</h2>
+                    <p><code>git</code> is a <b>good</b> version
+                    control tool</p>
+                    <p>it is a <i>command line utility</i></p>
+                </section>
+            </section>
+            <section>
+                <section id="slide-orgab9b2ea">
+                    <h2 id="orgab9b2ea">installing
+                    <code>git</code></h2>
+                    <p>download from <a href=
+                    "https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+                </section>
+                <section id="slide-orgab9b2ea-split">
+                    <p>make sure to enable</p>
+                    <ul>
+                        <li>Git on PATH (for Git Bash and CMD
+                        integration)</li>
+                        <li>CRLF Normalization</li>
+                        <li>MinTTY</li>
+                    </ul>
+                </section>
+                <section id="slide-orgba465ee">
+                    <h3 id="orgba465ee">configure Git</h3>
+                    <p><code>git</code> associates your name and
+                    email with every change you make</p>
+                    <p>inside a terminal:</p>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> config --global user.name <span style=
+                        "color: #f1fa8c;">"Your Name"</span>
+</code></pre>
+                    </div>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> config --global user.email <span style="color: #f1fa8c;">"youremail@domain.com"</span>
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section id="slide-orgf397fd7">
+                    <h2 id="orgf397fd7">repository</h2>
+                    <p>a folder containing your code</p>
+                    <p>every git repo contains a <code>.git</code>
+                    folder<br>
+                    it stores <b>all</b> of your changes, don’t
+                    mess with it (manually)</p>
+                </section>
+                <section id="slide-org17e1441">
+                    <h4 id="org17e1441">make a new repo</h4>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> init
+</code></pre>
+                    </div>
+                    <p>*inside an empty directory</p>
+                </section>
+                <section id="slide-org17e1441-split">
+                    <p>step by step:</p>
+                    <ol>
+                        <li><code>$ mkdir [folder_name]</code></li>
+                        <li><code>$ cd [folder_name]</code></li>
+                        <li><code>$ git init</code></li>
+                    </ol>
+                </section>
+                <section id="slide-orga91bf18">
+                    <h4 id="orga91bf18">use an existing repo</h4>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> clone <span style=
+                        "color: #61bfff;">[</span>path<span style=
+                        "color: #61bfff;">]</span>
+</code></pre>
+                    </div>
+                    <p>creates a new folder in your current
+                    directory</p>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> clone <span style=
+                        "color: #61bfff;">[</span>path<span style=
+                        "color: #61bfff;">]</span> <span style=
+                        "color: #61bfff;">[</span>destination<span style=
+                        "color: #61bfff;">]</span>
+</code></pre>
+                    </div>
+                    <p>clones the repo at <i>destination</i></p>
+                </section>
+                <section id="slide-orga91bf18-split">
+                    <h4>use an existing repo</h4>
+                    <p><i>path</i> can be:</p>
+                    <ul>
+                        <li>
+                            <p>a repository on your computer</p>
+                            <div class="org-src-container">
+                                <pre class=
+                                "src src-shell"><code trim=
+                                "">$ <span style=
+                                "color: #bd93f9;">git</span> clone ./path-to-existing-repo ./new-clone
+</code></pre>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+                <section id="slide-orga91bf18-split">
+                    <h4>use an existing repo</h4>
+                    <ul>
+                        <li>
+                            <p>a link to a remote repo</p>
+                            <div class="org-src-container">
+                                <pre class=
+                                "src src-shell"><code trim=
+                                "">$ <span style=
+                                "color: #bd93f9;">git</span> clone https://github.com/github/training-kit.git
+</code></pre>
+                            </div>
+                            <p>*clones to ./training-kit</p>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section id="slide-org462a821">
+                    <h2 id="org462a821">git commands</h2>
+                    <div class="outline-text-2" id=
+                    "text-org462a821"></div>
+                </section>
+                <section id="slide-org7bd0b2c">
+                    <h3 id="org7bd0b2c">terminal command
+                    syntax</h3>
+                    <p><code>command</code> <code class=
+                    "fragment">subcommand</code> <code class=
+                    "fragment">-o</code> <code class=
+                    "fragment">--option</code></p>
+                    <p class="fragment roll-in"><code>git</code>
+                    <code>[subcommand]</code>
+                    <code>[options]</code></p>
+                </section>
+                <section id="slide-orgc634ec9">
+                    <h3 id="orgc634ec9">git status</h3>
+                    <p>tells you the status of your repository</p>
+                    <p>*can tell you what to do next</p>
+                </section>
+                <section id="slide-org3a489ea">
+                    <h4 id="org3a489ea">staging</h4>
+                    <p>collect related changes, put them on a
+                    <b>stage</b></p>
+                </section>
+                <section id="slide-orgcc0df7f">
+                    <h4 id="orgcc0df7f">commit</h4>
+                    <p>document these changes file-by-file,
+                    line-by-line</p>
+                </section>
+                <section id="slide-orgcc0df7f-split">
+                    <p>a <b>commit</b> stores</p>
+                    <ul>
+                        <li>a descriptive comment</li>
+                        <li>metadata</li>
+                        <li>changed lines</li>
+                        <li>commit id</li>
+                    </ul>
+                </section>
+                <section id="slide-org10169eb">
+                    <h4 id="org10169eb">create your first
+                    commit</h4>
+                    <p>inside the new repo you created with
+                    <code>git init</code>, create
+                    <code>README.md</code></p>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">touch</span> README.md
+</code></pre>
+                    </div>
+                    <p>add some content to this file via your text
+                    editor, save it.</p>
+                </section>
+                <section id="slide-org10169eb-split">
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> status
+</code></pre>
+                    </div>
+                    <p>will tell you about the changes to your
+                    file</p>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">on branch master
+
+no commits yet
+
+untracked files:
+  <span style="color: #61bfff;">(</span>use <span style=
+"color: #f1fa8c;">"</span><span style=
+"color: #f1fa8c;">git</span><span style=
+"color: #f1fa8c;"> add &lt;file&gt;..."</span> to include<span style="color: #ff79c6;"> in</span> what will be committed<span style="color: #61bfff;">)</span>
+    README.md
+
+nothing added to commit but untracked files present <span style=
+"color: #61bfff;">(</span>use <span style=
+"color: #f1fa8c;">"</span><span style=
+"color: #f1fa8c;">git</span><span style=
+"color: #f1fa8c;"> add"</span> to track<span style=
+"color: #61bfff;">)</span>
+</code></pre>
+                    </div>
+                </section>
+                <section id="slide-orgfa82211">
+                    <h3 id="orgfa82211">git add</h3>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> add README.md
+</code></pre>
+                    </div>
+                    <p>will “add” <code>README.md</code> to the
+                    <i>staging</i> area</p>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">on branch master
+
+no commits yet
+
+changes to be committed:
+  <span style="color: #61bfff;">(</span>use <span style=
+"color: #f1fa8c;">"</span><span style=
+"color: #f1fa8c;">git</span><span style=
+"color: #f1fa8c;"> </span><span style=
+"color: #f1fa8c;">rm</span><span style=
+"color: #f1fa8c;"> --cached &lt;file&gt;..."</span> to unstage<span style="color: #61bfff;">)</span>
+    new file:   README.md
+</code></pre>
+                    </div>
+                </section>
+                <section id="slide-org72279d4">
+                    <h3 id="org72279d4">git commit</h3>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> commit -m <span style=
+                        "color: #f1fa8c;">"Commit message"</span>
+</code></pre>
+                    </div>
+                    <p>will “commit” this change and store it
+                    permanently</p>
+                    <p class="fragment roll-in">*omitting the -m
+                    flag launches the default editor chosen by you
+                    during Git installation</p>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        ""><span style=
+                        "color: #61bfff;">[</span>master <span style=
+                        "color: #ff79c6;">(</span>root-commit<span style=
+                        "color: #ff79c6;">)</span> 04e48d4<span style=
+                        "color: #61bfff;">]</span> Initial Commit
+ <span style=
+"color: #bd93f9; font-weight: bold;">1</span> file changed, <span style="color: #bd93f9; font-weight: bold;">3</span> insertions<span style="color: #61bfff;">(</span>+<span style="color: #61bfff;">)</span>
+ create mode <span style=
+"color: #bd93f9; font-weight: bold;">100644</span> README.md
+</code></pre>
+                    </div>
+                </section>
+                <section id="slide-org72279d4-split">
+                    <p>running <code>git status</code> again will
+                    tell you the updated status of your repo</p>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">on branch master
+nothing to commit, working tree clean
+</code></pre>
+                    </div>
+                </section>
+                <section id="slide-orgd53f517">
+                    <h3 id="orgd53f517">step by step:</h3>
+                    <ol>
+                        <li>Create changes (add/edit/remove)</li>
+                        <li><code>$ git status</code></li>
+                        <li><code>$ git add [filename]</code></li>
+                        <li><code>$ git commit -m "Meaningful
+                        commit message"</code></li>
+                        <li>Repeat</li>
+                    </ol>
+                    <p>*more parts coming soon!</p>
+                </section>
+                <section id="slide-org3ad861a">
+                    <h3 id="org3ad861a">more useful commands</h3>
+                    <div class="outline-text-3" id=
+                    "text-org3ad861a"></div>
+                </section>
+                <section id="slide-orgf81b0fc">
+                    <h4 id="orgf81b0fc">git rm –cached [file]</h4>
+                    <p>unstages [file]</p>
+                </section>
+                <section id="slide-orgbd13590">
+                    <h4 id="orgbd13590">git checkout [file]</h4>
+                    <p>removes unstaged changes</p>
+                </section>
+                <section id="slide-orgbd13590-split">
+                    <p><code>git checkout .</code></p>
+                    <p>removes <b>ALL</b> unstaged changes</p>
+                </section>
+                <section id="slide-org06a7094">
+                    <h4 id="org06a7094">git diff</h4>
+                    <p>shows unstaged changes (file-by-file,
+                    line-by-line)</p>
+                </section>
+                <section id="slide-orgc4a9b53">
+                    <h3 id="orgc4a9b53">when & what to commit</h3>
+                    <p class="fragment roll-in"><code>git</code> is
+                    only as good as your <i>commits</i></p>
+                </section>
+                <section id="slide-orgc4a9b53-split">
+                    <p>Write in present tense, imperative mood</p>
+                    <p>Ex:</p>
+                    <ul>
+                        <li>Add README with title and summary</li>
+                        <li>Rewrite presentation section on commit
+                        messages</li>
+                    </ul>
+                    <p class="fragment roll-in">*commits should
+                    sound like commands</p>
+                </section>
+                <section id="slide-orgc4a9b53-split">
+                    <p>try to combine multiple related changes into
+                    one commit</p>
+                    <p>making inefficient commits causes problems
+                    later</p>
+                    <p class="fragment roll-in">commits are
+                    checkpoints, you can revert them</p>
+                </section>
+                <section id="slide-orgc4a9b53-split">
+                    <p><b>good commit history</b>:</p>
+                    <ul>
+                        <li>Implement navbar component<br>
+                        (contains changes including navbar styling
+                        and structure)</li>
+                    </ul>
+                    <p><b>bad commit history (and commit
+                    messages)</b>:</p>
+                    <ul>
+                        <li>navbar</li>
+                        <li>sorry</li>
+                        <li>navbar styles</li>
+                        <li>typo</li>
+                    </ul>
+                    <p class="fragment roll-in">*bad commits
+                    clutter up your git history</p>
+                </section>
+            </section>
+            <section>
+                <section id="slide-org6c17453">
+                    <h2 id="org6c17453">what is Github?</h2>
+                    <p>Github is a cloud-based <code>git</code>
+                    repository hosting service</p>
+                    <p>there are several others: <a href=
+                    "https://gitlab.com">Gitlab</a>, <a href=
+                    "https://bitbucket.com">BitBucket</a>,
+                    self-hosted Git instances</p>
+                    <p>sign up at <a href=
+                    "https://github.com/join">https://github.com/join</a></p>
+                </section>
+                <section id="slide-org6c17453-split">
+                    <p><b>why Github?</b><br></p>
+                    <ul>
+                        <li>host your code online</li>
+                        <li>extra collaboration tools</li>
+                        <li>large developer community</li>
+                    </ul>
+                </section>
+                <section id="slide-org6c17453-split">
+                    <p>a Github repo is simply a <code>git</code>
+                    repo on a server</p>
+                    <p>we can:</p>
+                    <ol>
+                        <li>use <code>git</code> on a terminal</li>
+                        <li>interact through the site itself (via a
+                        browser)</li>
+                    </ol>
+                </section>
+                <section id="slide-org6c17453-split">
+                    <p><img src="./img/github-repo.png" alt=
+                    "github-repo.png"><br></p>
+                </section>
+                <section id="slide-org3237bfe">
+                    <h3 id="org3237bfe">create your own
+                    repository</h3>
+                    <ol>
+                        <li>Go to <a href="https://github.com/new">
+                            https://github.com/new</a>
+                        </li>
+                        <li>Provide a name and description<br></li>
+                    </ol>
+                    <p>*don’t initialize the repo with README (for
+                    now)</p>
+                </section>
+                <section id="slide-org3237bfe-split">
+                    <div id="org7e31672" class="figure">
+                        <p><img src="./img/github-empty-repo.png"
+                        alt="github-empty-repo.png"></p>
+                    </div>
+                </section>
+                <section id="slide-orgf6490d8">
+                    <h3 id="orgf6490d8">clone your new repo</h3>
+                    <ol>
+                        <li>copy the <code>git</code> URL<br>
+                        <code>https://github.com/yourname/repo.git</code></li>
+                        <li><code>$ git clone
+                        [copied_url_path]</code></li>
+                        <li><code>$ cd [repo_name]</code></li>
+                    </ol>
+                </section>
+                <section id="slide-orgcc81755">
+                    <h3 id="orgcc81755">connect your local repo to
+                    the remote repo</h3>
+                    <p>inside your local repo</p>
+                    <p><code>git remote add origin
+                    [copied_url_path]</code></p>
+                </section>
+                <section id="slide-org35c5c46">
+                    <h4 id="org35c5c46">OR</h4>
+                    <p>copy the contents of your local repo to the
+                    cloned repo</p>
+                    <p>you will need to recreate your commits</p>
+                    <p class="fragment roll-in">the
+                    <code>.git</code> directory stores <b>ALL</b>
+                    info related to your project, ∴ different
+                    <code>.git</code> == no commit/history</p>
+                    <p class="fragment roll-in">*esp useful when
+                    things go wrong</p>
+                </section>
+                <section id="slide-org5823bce">
+                    <h3 id="org5823bce">git fetch</h3>
+                    <p>syncs your remotes</p>
+                </section>
+                <section id="slide-orgce35844">
+                    <h3 id="orgce35844">git push</h3>
+                    <div class="org-src-container">
+                        <pre class="src src-shell"><code trim=
+                        "">$ <span style=
+                        "color: #bd93f9;">git</span> push -u <span style=
+                        "color: #61bfff;">[</span>remote<span style=
+                        "color: #61bfff;">]</span> <span style=
+                        "color: #61bfff;">[</span>branch<span style=
+                        "color: #61bfff;">]</span>
+</code></pre>
+                    </div>
+                    <p><code>git push -u origin main</code><br>
+                    <i>pushes</i> changes from your local
+                    <b>main</b> branch to the remote repo (aka
+                    origin)</p>
+                    <p class="fragment roll-in"><code>git
+                    push</code> remembers your remote</p>
+                </section>
+                <section id="slide-orgcf49c2a">
+                    <h3 id="orgcf49c2a">git workflow updated:</h3>
+                    <ol>
+                        <li><code>$ git fetch</code></li>
+                        <li>Create changes (add/edit/remove)</li>
+                        <li><code>$ git status</code></li>
+                        <li><code>$ git add [filename]</code></li>
+                        <li><code>$ git commit -m "Meaningful
+                        commit message"</code></li>
+                        <li>Repeat</li>
+                        <li><code>$ git push</code></li>
+                    </ol>
+                </section>
+            </section>
+            <section>
+                <section id="slide-orgdca9869">
+                    <h2 id="orgdca9869"><span class=
+                    "todo TODO">TODO</span> What next?</h2>
+                    <div class="outline-text-2" id=
+                    "text-orgdca9869"></div>
+                </section>
+                <section id="slide-org9bf1e8c">
+                    <h3 id="org9bf1e8c">Github Student Pack</h3>
+                </section>
+            </section>
+            <section>
+                <section id="slide-org9060bc6">
+                    <h2 id="org9060bc6"><span class=
+                    "todo TODO">TODO</span> Further resources</h2>
+                </section>
+            </section>
+        </div>
+    </div>
+    <script src=
+    "https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+    
+    <script src=
+    "https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+    
+    <script src=
+    "https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+    
+    <script src=
+    "https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+    
+    <script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+    plugins: [RevealMarkdown,RevealZoom,RevealNotes],
+    transition: 'concave',
+    multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+    },
+
+    // Optional libraries used to extend on reveal.js
+    dependencies: [
+    ]
+    });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+#+title: Git & Version Control
+#+options: toc:nil num:nil reveal_title_slide:nil
+#+reveal_theme: night
+#+reveal_init_options: transition: 'concave'
+#+reveal_root: https://cdn.jsdelivr.net/npm/reveal.js
+#+export_file_name: index
+
+* Version Control
+the practice of tracking and managing changes to software code
+
+** Why use VC?
+- undo changes
+- simplify collaboration
+- look at previous versions
+
+** Bad version control
+filename-based \\
+[[./img/bad-vc.png]]
+
+#+REVEAL: split:t
+unnecessary comments in code \\
+#+begin_src cpp
+for (int i = 1; i < Ntr; i++) {
+  if (radius > turn_rad[i - 1] && radius <= turn_rad[i]) {
+    // for(int j = 1; j < Nh; j++) {
+    //     if (theta < heading[j-1]) {
+    //         // cout << "I" << i << endl;
+    //         // cout << "J" << j << endl;
+
+    //         q11 = torque_in[i-1][j-1];
+    //         q12 = torque_in[i][j-1];
+    //         q21 = torque_in[i-1][j];
+    //         q22 = torque_in[i][j];
+
+    //         // torque_out = sqrt(q22 - q12) * q22/q11;
+    //         torque_out = abs(sqrt(q22 - q12) * q22/q11);
+
+    //         cout << "T_Out:" << t_out << endl;
+    //     }
+    // }
+    q11 = torque_in[i - 1][0];
+    q22 = torque_in[i][0];
+    torque_out = q22 / q11;
+  }
+}
+#+end_src
+
+* what is ~git~?
+~git~ is a *good* version control tool
+
+it is a /command line utility/
+
+* installing ~git~
+download from https://git-scm.com/downloads
+
+#+REVEAL: split
+make sure to enable
+- Git on PATH (for Git Bash and CMD integration)
+- CRLF Normalization
+- MinTTY
+
+** configure Git
+~git~ associates your name and email with every change you make
+
+inside a terminal:
+
+#+BEGIN_SRC shell
+$ git config --global user.name "Your Name"
+#+END_SRC
+
+#+BEGIN_SRC shell
+$ git config --global user.email "youremail@domain.com"
+#+END_SRC
+
+* repository
+a folder containing your code
+
+every git repo contains a ~.git~ folder \\
+it stores *all* of your changes, don't mess with it (manually)
+
+*** make a new repo
+#+BEGIN_SRC shell
+$ git init
+#+END_SRC
+
+*inside an empty directory
+
+#+REVEAL: split
+step by step:
+1. ~$ mkdir [folder_name]~
+2. ~$ cd [folder_name]~
+3. ~$ git init~
+
+*** use an existing repo
+#+BEGIN_SRC shell
+$ git clone [path]
+#+END_SRC
+
+creates a new folder in your current directory
+
+#+BEGIN_SRC shell
+$ git clone [path] [destination]
+#+END_SRC
+
+clones the repo at /destination/
+
+#+REVEAL: split:t
+/path/ can be:
+- a repository on your computer
+
+  #+BEGIN_SRC shell
+$ git clone ./path-to-existing-repo ./new-clone
+#+END_SRC
+
+#+REVEAL: split:t
+- a link to a remote repo
+
+  #+BEGIN_SRC shell
+$ git clone https://github.com/github/training-kit.git
+#+END_SRC
+  *clones to ./training-kit
+
+* git commands
+** terminal command syntax
+#+BEGIN_EXPORT html
+<p><code>command</code> <code class="fragment">subcommand</code> <code class="fragment">-o</code> <code class="fragment">--option</code></p>
+#+END_EXPORT
+
+#+ATTR_REVEAL: :frag roll-in
+~git~ ~[subcommand]~ ~[options]~
+
+** git status
+tells you the status of your repository
+
+*can tell you what to do next
+
+*** staging
+collect related changes, put them on a *stage*
+*** commit
+document these changes file-by-file, line-by-line
+
+#+REVEAL: split
+a *commit* stores
+- a descriptive comment
+- metadata
+- changed lines
+- commit id
+
+*** create your first commit
+inside the new repo you created with ~git init~, create ~README.md~
+
+#+begin_src shell
+$ touch README.md
+#+end_src
+add some content to this file via your text editor, save it.
+
+#+REVEAL: split
+#+begin_src shell
+$ git status
+#+end_src
+will tell you about the changes to your file
+
+#+begin_src shell
+on branch master
+
+no commits yet
+
+untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	README.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+#+end_src
+
+** git add
+#+begin_src shell
+$ git add README.md
+#+end_src
+will "add" ~README.md~ to the /staging/ area
+
+#+begin_src shell
+on branch master
+
+no commits yet
+
+changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   README.md
+#+end_src
+
+** git commit
+#+begin_src shell
+$ git commit -m "Commit message"
+#+end_src
+will "commit" this change and store it permanently
+
+#+ATTR_REVEAL: :frag roll-in
+*omitting the -m flag launches the default editor chosen by you during Git installation
+
+#+begin_src shell
+[master (root-commit) 04e48d4] Initial Commit
+ 1 file changed, 3 insertions(+)
+ create mode 100644 README.md
+#+end_src
+
+#+REVEAL: split
+running ~git status~ again will tell you the updated status of your repo
+
+#+begin_src shell
+on branch master
+nothing to commit, working tree clean
+#+end_src
+
+** step by step:
+1. Create changes (add/edit/remove)
+2. ~$ git status~
+3. ~$ git add [filename]~
+4. ~$ git commit -m "Meaningful commit message"~
+5. Repeat
+
+*more parts coming soon!
+
+** more useful commands
+*** git rm --cached [file]
+unstages [file]
+
+*** git checkout [file]
+removes unstaged changes
+
+#+REVEAL: split
+~git checkout .~
+
+removes *ALL* unstaged changes
+
+*** git diff
+shows unstaged changes (file-by-file, line-by-line)
+
+** when & what to commit
+#+ATTR_REVEAL: :frag roll-in
+~git~ is only as good as your /commits/
+
+#+REVEAL: split
+Write in present tense, imperative mood
+
+Ex:
+- Add README with title and summary
+- Rewrite presentation section on commit messages
+
+#+ATTR_REVEAL: :frag roll-in
+*commits should sound like commands
+
+#+REVEAL: split
+try to combine multiple related changes into one commit
+
+making inefficient commits causes problems later
+
+#+ATTR_REVEAL: :frag roll-in
+commits are checkpoints, you can revert them
+
+#+REVEAL: split
+*good commit history*:
+- Implement navbar component \\
+  (contains changes including navbar styling and structure)
+
+*bad commit history (and commit messages)*:
+- navbar
+- sorry
+- navbar styles
+- typo
+
+#+ATTR_REVEAL: :frag roll-in
+*bad commits clutter up your git history
+
+* what is Github?
+Github is a cloud-based ~git~ repository hosting service
+
+there are several others: [[https://gitlab.com][Gitlab]], [[https://bitbucket.com][BitBucket]], self-hosted Git instances
+
+sign up at [[https://github.com/join]]
+
+#+REVEAL: split
+*why Github?* \\
+- host your code online
+- extra collaboration tools
+- large developer community
+
+#+REVEAL: split
+a Github repo is simply a ~git~ repo on a server
+
+we can:
+a. use ~git~ on a terminal
+b. interact through the site itself (via a browser)
+
+#+REVEAL: split
+[[./img/github-repo.png]] \\
+
+** create your own repository
+1. Go to https://github.com/new
+2. Provide a name and description \\
+
+*don't initialize the repo with README (for now)
+
+#+REVEAL: split
+[[./img/github-empty-repo.png]]
+
+** clone your new repo
+1. copy the ~git~ URL \\
+   ~https://github.com/yourname/repo.git~
+2. ~$ git clone [copied_url_path]~
+3. ~$ cd [repo_name]~
+
+** connect your local repo to the remote repo
+inside your local repo
+
+~git remote add origin [copied_url_path]~
+
+*** OR
+copy the contents of your local repo to the cloned repo
+
+you will need to recreate your commits
+
+#+ATTR_REVEAL: :frag roll-in
+the ~.git~ directory stores *ALL* info related to your project, ∴ different ~.git~ == no commit/history
+
+#+ATTR_REVEAL: :frag roll-in
+*esp useful when things go wrong
+
+** git fetch
+syncs your remotes
+
+** git push
+#+begin_src shell
+$ git push -u [remote] [branch]
+#+end_src
+
+~git push -u origin main~ \\
+/pushes/ changes from your local *main* branch to the remote repo (aka origin)
+
+#+ATTR_REVEAL: :frag roll-in
+~git push~ remembers your remote
+
+** git workflow updated:
+1. ~$ git fetch~
+2. Create changes (add/edit/remove)
+3. ~$ git status~
+4. ~$ git add [filename]~
+5. ~$ git commit -m "Meaningful commit message"~
+6. Repeat
+7. ~$ git push~
+
+* TODO What next?
+** Github Student Pack
+* TODO Further resources
