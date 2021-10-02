@@ -1,0 +1,11 @@
+<div class="contributor-list">
+  {% for person_data in site.data.people %}
+    {% assign person = person_data[1] %}
+      <div class="contributor-details">
+          <img src="https://github.com/{{- person.github -}}.png?size=128" alt="{{ person.name }}'s Github Profile" />
+          <a href="https://github.com/{{- person.github -}}" target="_blank">
+              {{- person.name -}}
+          </a>
+      </div>
+  {% endfor %}
+</div>
