@@ -22,8 +22,8 @@ title: Git and Version Control
 email: gdsc.manit@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   A repository to demonstrate a workflow based on Git for Hacktoberfest
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/git-and-version-control" # the subpath of your site, e.g. /blog
+url: "https://vision-nitb.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: Vision-NITB
 
 # Build settings
