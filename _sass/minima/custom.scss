@@ -1,17 +1,8 @@
-.contributor-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+a:visited {
+  color: inherit;
 }
 
-.contributor-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.6rem;
-
-  img {
-    max-width: 128px;
-    margin-bottom: 0.6rem;
-  }
+a:hover {
+  color: inherit;
+  text-decoration: none;
 }

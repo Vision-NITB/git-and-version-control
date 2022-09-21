@@ -1,10 +1,12 @@
-<div class="contributor-list">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="flex flex-wrap items-center">
   {% for person_data in site.data.people %}
     {% assign person = person_data[1] %}
-      <div class="contributor-details">
-          <img src="https://github.com/{{- person.github -}}.png?size=128" alt="{{ person.name }}'s Github Profile" />
-          <a href="https://github.com/{{- person.github -}}" target="_blank">
-              {{- person.name -}}
+      <div class="m-2 flex">
+          <img class="inline-block rounded-l-full w-8 h-8" src="https://github.com/{{- person.github -}}.png?size=32" alt="{{ person.name }}'s Github Profile" />
+          <a class="inline-block rounded-r-full text-sm text-gray-800 flex flex-nowrap items-center bg-gray-100 pl-2 pr-4" title="{{- person.name -}}" href="https://github.com/{{- person.github -}}" target="_blank">
+              @{{- person.github -}}
           </a>
       </div>
   {% endfor %}
